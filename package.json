@@ -1,0 +1,16 @@
+{
+  "name": "places",
+  "version": "1.0.0",
+  "description": "A simple tool to map your saved places and starred locations exported from Google Maps using Google Takeout.",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,mjs}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}
