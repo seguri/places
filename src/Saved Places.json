@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [9.2145487, 45.4754928],
+        "type": "Point"
+      },
+      "properties": {
+        "date": "2012-06-16T20:11:01Z",
+        "google_maps_url": "http://maps.google.com/?cid=16090802306479906606",
+        "location": {
+          "address": "Via Bartolomeo Eustachi, 17, 20129 Milano MI, Italy",
+          "country_code": "IT",
+          "name": "Poporoya"
+        }
+      },
+      "type": "Feature"
+    }
+  ]
+}

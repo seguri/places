@@ -14,6 +14,11 @@ export default [
   a11yPlugin.flatConfigs.recommended,
   {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts}"],
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
       ecmaVersion: "latest",
