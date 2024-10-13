@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple tool to map your saved places and starred locations exported from Google Maps using Google Takeout.",
   "type": "module",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,mjs}\"",
     "lint": "eslint",
@@ -27,7 +27,9 @@
     "vite": "^5.4.8"
   },
   "dependencies": {
+    "leaflet": "^1.9.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1"
   }
 }

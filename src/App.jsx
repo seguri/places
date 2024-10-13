@@ -1,14 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import Places from "./Places.jsx";
 
-const App = () => {
-  return (
-    <div>
-      <h1>Welcome</h1>
-    </div>
-  );
-};
-
-const container = document.getElementById("root");
-const root = createRoot(container);
-root.render(React.createElement(App));
+const root = createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <Places />
+  </React.StrictMode>,
+);
