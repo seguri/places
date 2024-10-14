@@ -1,9 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer } from "react-leaflet";
 import Place from "./Place.jsx";
-import starred from "./Saved Places.json";
-
-const isBlank = (str) => !str || /^\s*$/.test(str);
+import starred from "./Saved Places.min.json";
 
 export default function Places() {
   return (
@@ -12,17 +10,15 @@ export default function Places() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {starred.features
-        .filter((feature) => !isBlank(feature?.properties?.location?.name))
-        .map(({ geometry, properties }) => (
-          <Place
-            key={properties.google_maps_url}
-            name={properties.location.name}
-            url={properties.google_maps_url}
-            lat={geometry.coordinates[1]}
-            lon={geometry.coordinates[0]}
-          />
-        ))}
+      {starred.map((feature) => (
+        <Place
+          key={feature[3]}
+          name={feature[2]}
+          url={`http://maps.google.com/?cid=${feature[3]}`}
+          lat={feature[0]}
+          lon={feature[1]}
+        />
+      ))}
     </MapContainer>
   );
 }
