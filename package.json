@@ -7,6 +7,7 @@
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,mjs}\"",
     "lint": "eslint",
+    "csv2geojson": "node data/csv2geojson.mjs",
     "minify-places": "node data/minify-places.mjs",
     "dev": "vite",
     "build": "vite build",
