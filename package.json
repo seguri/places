@@ -8,6 +8,7 @@
     "format": "prettier --write \"**/*.{js,jsx,mjs}\"",
     "lint": "eslint",
     "csv2geojson": "node data/csv2geojson.mjs",
+    "scrape-cids": "node data/scrape-cids.mjs",
     "minify-places": "node data/minify-places.mjs",
     "dev": "vite",
     "build": "vite build",
@@ -27,6 +28,9 @@
     "globals": "^15.11.0",
     "papaparse": "^5.4.1",
     "prettier": "^3.3.3",
+    "puppeteer": "^23.5.3",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "vite": "^5.4.8"
   },
   "dependencies": {
