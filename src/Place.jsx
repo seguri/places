@@ -1,7 +1,8 @@
 import { Marker, Popup } from "react-leaflet";
 import PropTypes from "prop-types";
 
-export default function Place({ name, url, lat, lon }) {
+export default function Place({ feature }) {
+  const [lat, lon, name, url] = feature;
   return (
     <Marker position={[lat, lon]}>
       <Popup>
@@ -14,8 +15,7 @@ export default function Place({ name, url, lat, lon }) {
 }
 
 Place.propTypes = {
-  name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  lat: PropTypes.number.isRequired,
-  lon: PropTypes.number.isRequired,
+  feature: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  ).isRequired,
 };
