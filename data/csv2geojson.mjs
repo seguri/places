@@ -1,4 +1,4 @@
-import { createReadStream } from "fs";
+import { createReadStream, readFileSync } from "fs";
 import { writeFile } from "fs/promises";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -7,8 +7,19 @@ import Papa from "papaparse";
 // Helper function to get the directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const cachePath = join(__dirname, "cache.json");
+const cache = JSON.parse(readFileSync(cachePath, "utf8"));
 
-const parse = (inStream) =>
+const getCachedCoordinates = (url) => {
+  const cid = parseCid(url);
+  if (!(cid in cache)) {
+    return [];
+  }
+  const [lat, lng] = cache[cid];
+  return [parseFloat(lat), parseFloat(lng)];
+};
+
+const parseCsv = (inStream) =>
   new Promise((resolve, reject) => {
     Papa.parse(inStream, {
       header: true,
@@ -26,17 +37,17 @@ const parseCid = (url) => {
   return BigInt(match[1]).toString();
 };
 
-const geoJsonTemplate = (features) => ({
+const geoJsonTemplate = (rows) => ({
   type: "FeatureCollection",
-  features: features.map((feature) => ({
+  features: rows.map((row) => ({
     geometry: {
-      coordinates: [],
+      coordinates: getCachedCoordinates(row.URL),
       type: "Point",
     },
     properties: {
-      google_maps_url: `http://maps.google.com/?cid=${parseCid(feature.URL)}`,
+      google_maps_url: `http://maps.google.com/?cid=${parseCid(row.URL)}`,
       location: {
-        name: feature.Title,
+        name: row.Title,
       },
     },
     type: "Feature",
@@ -45,7 +56,7 @@ const geoJsonTemplate = (features) => ({
 
 const toGeoJson = async (filename) => {
   const csvPath = join(__dirname, filename);
-  const { data } = await parse(createReadStream(csvPath));
+  const { data } = await parseCsv(createReadStream(csvPath));
   const geoJson = geoJsonTemplate(data);
   await writeFile(
     csvPath.replace(".csv", ".json"),

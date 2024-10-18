@@ -10,8 +10,8 @@
     "csv2geojson": "node data/csv2geojson.mjs",
     "scrape-cids": "node data/scrape-cids.mjs",
     "minify-places": "node data/minify-places.mjs",
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "npm run csv2geojson && npm run minify-places && vite",
+    "build": "npm run csv2geojson && npm run minify-places && vite build",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

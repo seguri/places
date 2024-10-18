@@ -1,4 +1,4 @@
-import fs from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -6,14 +6,16 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path to the input and output JSON files
-const inputFilePath = path.join(__dirname, "Saved Places.json");
-const outputFilePath = path.join(
-  __dirname,
-  "..",
-  "src",
-  "Saved Places.min.json",
-);
+const calcPaths = (inFilename) => {
+  const inPath = path.join(__dirname, inFilename);
+  const outPath = path.join(
+    __dirname,
+    "..",
+    "src",
+    inFilename.replace(".json", ".min.json"),
+  );
+  return [inPath, outPath];
+};
 
 const isBlank = (str) => !str || /^\s*$/.test(str);
 
@@ -26,39 +28,32 @@ const extractCid = (url) => {
   return match[1];
 };
 
-// Read the input JSON file
-fs.readFile(inputFilePath, "utf8", (err, data) => {
-  if (err) {
-    console.error('Error reading "Saved Places.json":', err);
-    return;
-  }
+const isValidFeature = (feature) => {
+  const name = feature?.properties?.location?.name;
+  const [lat, lon] = feature?.geometry?.coordinates ?? [NaN, NaN];
+  return !isBlank(name) && lat && lon;
+};
 
-  // Parse the JSON data
-  const places = JSON.parse(data);
+const flattenFeature = (feature) => [
+  feature.geometry.coordinates[1], // lat
+  feature.geometry.coordinates[0], // lon
+  feature.properties.location.name,
+  extractCid(feature.properties.google_maps_url),
+];
 
-  // Flatten and minify the data
-  const minifiedPlaces = places.features
-    .filter((feature) => !isBlank(feature?.properties?.location?.name))
-    .map((feature) => [
-      feature.geometry.coordinates[1], // lat
-      feature.geometry.coordinates[0], // lon
-      feature.properties.location.name,
-      extractCid(feature.properties.google_maps_url),
-    ]);
+const minifyPlace = (filename) => {
+  console.log(`Minifying ${filename}...`);
+  const [inPath, outPath] = calcPaths(filename);
+  const data = readFileSync(inPath, "utf8");
+  const features = JSON.parse(data);
+  const minified = features.features.filter(isValidFeature).map(flattenFeature);
+  writeFileSync(outPath, JSON.stringify(minified));
+  console.log(`Minified ${filename} to ${outPath}`);
+};
 
-  // Write the minified data to a new JSON file
-  fs.writeFile(
-    outputFilePath,
-    JSON.stringify(minifiedPlaces),
-    "utf8",
-    (err) => {
-      if (err) {
-        console.error("Error writing the JSON file:", err);
-        return;
-      }
-      console.log(
-        `${minifiedPlaces.length} places have been minified and written to ${outputFilePath}`,
-      );
-    },
-  );
-});
+const filenames = [
+  "Saved Places.json",
+  "Want to go.json",
+  "Favourite Places.json",
+];
+filenames.forEach(minifyPlace);
