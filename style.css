@@ -9,29 +9,6 @@
     height: 100vh;
 }
 
-.leaflet-div-icon {
-    background: unset !important;
-    border: unset !important;
-    margin-left: -12px !important;
-}
-
-.lucide-star {
-    color: #ffd800;
-    fill: #ffd800;
-    stroke: black;
-    stroke-width: 1px;
-}
-
-.lucide-heart {
-    color: red;
-    fill: red;
-    stroke: black;
-    stroke-width: 1px;
-}
-
-.lucide-flag {
-    color: green;
-    fill: green;
-    stroke: black;
-    stroke-width: 1px;
+.leaflet-marker-icon {
+    margin-top: -6px !important;
 }
