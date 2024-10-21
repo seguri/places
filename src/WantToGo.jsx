@@ -1,8 +1,8 @@
+import { useState, useEffect } from "react";
 import { renderToString } from "react-dom/server";
 import { Eye } from "lucide-react";
 import { Icon } from "leaflet";
 import Place from "./Place.jsx";
-import wannago from "./Want to go.min.json";
 
 const iconStyle = {
   color: "#4cbb17",
@@ -19,5 +19,13 @@ const icon = () =>
   });
 
 export default function WantToGo() {
-  return wannago.map((f) => <Place key={f[3]} feature={f} icon={icon()} />);
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    fetch("/Want to go.min.json")
+      .then((response) => response.json())
+      .then((data) => setFeatures(data));
+  }, []);
+
+  return features.map((f) => <Place key={f[3]} feature={f} icon={icon()} />);
 }

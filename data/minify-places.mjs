@@ -11,7 +11,7 @@ const calcPaths = (inFilename) => {
   const outPath = path.join(
     __dirname,
     "..",
-    "src",
+    "public",
     inFilename.replace(".json", ".min.json"),
   );
   return [inPath, outPath];
@@ -42,13 +42,11 @@ const flattenFeature = (feature) => [
 ];
 
 const minifyPlace = (filename) => {
-  console.log(`Minifying ${filename}...`);
   const [inPath, outPath] = calcPaths(filename);
   const data = readFileSync(inPath, "utf8");
   const features = JSON.parse(data);
   const minified = features.features.filter(isValidFeature).map(flattenFeature);
   writeFileSync(outPath, JSON.stringify(minified));
-  console.log(`Minified ${filename} to ${outPath}`);
 };
 
 const filenames = [

@@ -1,8 +1,8 @@
+import { useState, useEffect } from "react";
 import { renderToString } from "react-dom/server";
 import { Heart } from "lucide-react";
 import { Icon } from "leaflet";
 import Place from "./Place.jsx";
-import favourite from "./Favourite Places.min.json";
 
 const iconStyle = {
   color: "#ff2400",
@@ -19,5 +19,13 @@ const icon = () =>
   });
 
 export default function FavouritePlaces() {
-  return favourite.map((f) => <Place key={f[3]} feature={f} icon={icon()} />);
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    fetch("/Favourite Places.min.json")
+      .then((response) => response.json())
+      .then((data) => setFeatures(data));
+  }, []);
+
+  return features.map((f) => <Place key={f[3]} feature={f} icon={icon()} />);
 }

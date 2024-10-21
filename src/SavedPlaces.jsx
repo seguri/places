@@ -1,8 +1,8 @@
+import { useState, useEffect } from "react";
 import { renderToString } from "react-dom/server";
 import { Star } from "lucide-react";
-import { DivIcon, Icon } from "leaflet";
+import { Icon } from "leaflet";
 import Place from "./Place.jsx";
-import starred from "./Saved Places.min.json";
 
 const iconStyle = {
   color: "#ffd800",
@@ -19,5 +19,12 @@ const icon = () =>
   });
 
 export default function StarredPlaces() {
-  return starred.map((f) => <Place key={f[3]} feature={f} icon={icon()} />);
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    fetch("/Saved Places.min.json")
+      .then((response) => response.json())
+      .then((data) => setFeatures(data));
+  }, []);
+  return features.map((f) => <Place key={f[3]} feature={f} icon={icon()} />);
 }
