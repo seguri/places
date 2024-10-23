@@ -2,6 +2,8 @@
 
 A simple tool to map your saved places and starred locations exported from Google Maps using [Google Takeout](https://takeout.google.com/).
 
+![screenshot](https://github.com/user-attachments/assets/c1a2fd63-13de-42f1-9d30-f036ed76e3e5)
+
 ## Importing Google Takeout data
 
 This software currently supports importing the following data from Google Takeout:
