@@ -18,7 +18,7 @@ function FlyToCurrentLocation({ setPosition }) {
       setPosition([lat, lng]);
       map.setView([lat, lng], map.getZoom());
     });
-  }, []); // Run only once
+  }, [map, setPosition]);
   return null;
 }
 

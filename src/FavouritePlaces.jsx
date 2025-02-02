@@ -4,7 +4,7 @@ import Place from "./Place.jsx";
 
 const icon = () =>
   new Icon({
-    iconUrl: `/heart.svg`,
+    iconUrl: "/heart.svg",
     iconSize: [24, 24],
     className: "lucide-heart",
   });
