@@ -1,7 +1,7 @@
-import { createReadStream, readFileSync } from "fs";
-import { writeFile } from "fs/promises";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
+import { createReadStream, readFileSync } from "node:fs";
+import { writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import Papa from "papaparse";
 
 // Helper function to get the directory name

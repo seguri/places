@@ -10,6 +10,7 @@
     "csv2geojson": "node data/csv2geojson.mjs",
     "scrape-cids": "node data/scrape-cids.mjs",
     "minify-places": "node data/minify-places.mjs",
+    "geojson2csv": "node data/geojson2csv.mjs",
     "dev": "npm run csv2geojson && npm run minify-places && vite",
     "build": "npm run csv2geojson && npm run minify-places && vite build",
     "preview": "vite preview",
